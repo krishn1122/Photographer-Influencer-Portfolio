@@ -286,7 +286,7 @@ Contributions, issues, and feature requests are welcome!
 
 For questions or support, please:
 - Open an issue on GitHub
-- Contact via email: hello@creativelens.com
+- Contact via email: Krrishjatav5@gmail.com
 - Follow on social media for updates
 
 ## 🎉 Acknowledgments
@@ -298,6 +298,3 @@ For questions or support, please:
 
 ---
 
-**Made with ❤️ for photographers and content creators**
-
-🌟 If you like this project, please give it a star on GitHub!
