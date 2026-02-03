@@ -74,6 +74,7 @@ html {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: transparent;
 }
 
 .logo i {
@@ -81,6 +82,8 @@ html {
     background: var(--instagram-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
 
 .nav-menu {
@@ -198,6 +201,7 @@ html {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: transparent;
 }
 
 .hero-subtitle {
@@ -389,6 +393,8 @@ section {
     background: var(--instagram-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
 
 /* About Section */
@@ -498,6 +504,8 @@ section {
     background: var(--instagram-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
 
 .skill-item h4 {
@@ -698,6 +706,8 @@ section {
     background: var(--instagram-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
 
 .youtube .social-card-header i {

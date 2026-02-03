@@ -3,9 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional photographer and social media influencer specializing in portrait, landscape, and product photography. Creating engaging visual stories with 250K+ followers.">
+    <meta name="keywords" content="photographer, photography, social media influencer, content creator, portrait photography, landscape photography, product photography">
+    <meta name="author" content="Creative Lens">
+    
+    <meta property="og:title" content="Creative Lens | Photographer & Influencer">
+    <meta property="og:description" content="Professional photographer and social media influencer creating engaging visual stories. 250K+ followers across platforms.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://creativelens.netlify.app">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Creative Lens | Photographer & Influencer">
+    <meta name="twitter:description" content="Professional photographer and social media influencer creating engaging visual stories.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200">
+    
     <title>Creative Lens | Photographer & Influencer</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -23,11 +38,11 @@
                 <li><a href="#social" class="nav-link">Social</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -196,7 +211,7 @@
                                 <span><i class="fas fa-comment"></i> 234</span>
                             </div>
                         </div>
-                        <button class="gallery-btn"><i class="fas fa-expand"></i></button>
+                        <button class="gallery-btn" aria-label="Expand image"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="landscape">
@@ -209,7 +224,7 @@
                                 <span><i class="fas fa-comment"></i> 456</span>
                             </div>
                         </div>
-                        <button class="gallery-btn"><i class="fas fa-expand"></i></button>
+                        <button class="gallery-btn" aria-label="Expand image"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="product">
@@ -222,7 +237,7 @@
                                 <span><i class="fas fa-comment"></i> 178</span>
                             </div>
                         </div>
-                        <button class="gallery-btn"><i class="fas fa-expand"></i></button>
+                        <button class="gallery-btn" aria-label="Expand image"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="lifestyle">
@@ -235,7 +250,7 @@
                                 <span><i class="fas fa-comment"></i> 312</span>
                             </div>
                         </div>
-                        <button class="gallery-btn"><i class="fas fa-expand"></i></button>
+                        <button class="gallery-btn" aria-label="Expand image"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="portrait">
@@ -248,7 +263,7 @@
                                 <span><i class="fas fa-comment"></i> 589</span>
                             </div>
                         </div>
-                        <button class="gallery-btn"><i class="fas fa-expand"></i></button>
+                        <button class="gallery-btn" aria-label="Expand image"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="landscape">
@@ -261,7 +276,7 @@
                                 <span><i class="fas fa-comment"></i> 678</span>
                             </div>
                         </div>
-                        <button class="gallery-btn"><i class="fas fa-expand"></i></button>
+                        <button class="gallery-btn" aria-label="Expand image"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="product">
@@ -274,7 +289,7 @@
                                 <span><i class="fas fa-comment"></i> 223</span>
                             </div>
                         </div>
-                        <button class="gallery-btn"><i class="fas fa-expand"></i></button>
+                        <button class="gallery-btn" aria-label="Expand image"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
                 <div class="gallery-item" data-category="lifestyle">
@@ -287,7 +302,7 @@
                                 <span><i class="fas fa-comment"></i> 445</span>
                             </div>
                         </div>
-                        <button class="gallery-btn"><i class="fas fa-expand"></i></button>
+                        <button class="gallery-btn" aria-label="Expand image"><i class="fas fa-expand"></i></button>
                     </div>
                 </div>
             </div>
@@ -493,24 +508,28 @@
                     </div>
                 </div>
 
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contact">
+                    <p style="display: none;">
+                        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                    </p>
                     <div class="form-group">
-                        <input type="text" id="name" required>
+                        <input type="text" id="name" name="name" required>
                         <label for="name">Your Name</label>
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" required>
+                        <input type="email" id="email" name="email" required>
                         <label for="email">Your Email</label>
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="subject" required>
+                        <input type="text" id="subject" name="subject" required>
                         <label for="subject">Subject</label>
                         <i class="fas fa-tag"></i>
                     </div>
                     <div class="form-group">
-                        <textarea id="message" rows="5" required></textarea>
+                        <textarea id="message" name="message" rows="5" required></textarea>
                         <label for="message">Your Message</label>
                         <i class="fas fa-comment"></i>
                     </div>

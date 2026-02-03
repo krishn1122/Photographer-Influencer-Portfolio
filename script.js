@@ -10,8 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const statNumbers = document.querySelectorAll('.stat-number');
 
     hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
+        const isExpanded = navMenu.classList.toggle('active');
         hamburger.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', isExpanded);
     });
 
     navLinks.forEach(link => {
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    let scrollTimeout;
     window.addEventListener('scroll', () => {
         if (window.scrollY > 100) {
             navbar.classList.add('scrolled');
@@ -50,6 +52,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
+
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.hero, .about, .gallery, .social-section, .contact');
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                const yPos = -(scrolled * speed / 10);
+                element.style.backgroundPosition = `center ${yPos}px`;
+            });
+        }, 10);
     });
 
     backToTop.addEventListener('click', () => {
@@ -63,15 +77,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const target = parseFloat(element.getAttribute('data-target'));
         const duration = 2000;
         const increment = target / (duration / 16);
+        const isDecimal = target % 1 !== 0;
         let current = 0;
 
         const updateCounter = () => {
             current += increment;
             if (current < target) {
-                element.textContent = current.toFixed(1);
+                element.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
                 requestAnimationFrame(updateCounter);
             } else {
-                element.textContent = target;
+                element.textContent = isDecimal ? target.toFixed(1) : target;
             }
         };
 
@@ -96,30 +111,37 @@ document.addEventListener('DOMContentLoaded', function() {
         counterObserver.observe(stat);
     });
 
+    let filterTimeout;
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             const filterValue = btn.getAttribute('data-filter');
+            
+            if (filterTimeout) clearTimeout(filterTimeout);
 
             galleryItems.forEach(item => {
                 const category = item.getAttribute('data-category');
                 
                 if (filterValue === 'all' || category === filterValue) {
                     item.style.display = 'block';
-                    setTimeout(() => {
-                        item.style.opacity = '1';
-                        item.style.transform = 'scale(1)';
-                    }, 10);
+                    item.offsetHeight;
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1)';
                 } else {
                     item.style.opacity = '0';
                     item.style.transform = 'scale(0.8)';
-                    setTimeout(() => {
-                        item.style.display = 'none';
-                    }, 300);
                 }
             });
+
+            filterTimeout = setTimeout(() => {
+                galleryItems.forEach(item => {
+                    if (item.style.opacity === '0') {
+                        item.style.display = 'none';
+                    }
+                });
+            }, 300);
         });
     });
 
@@ -170,31 +192,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-        };
-
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitBtn.disabled = true;
-
-        setTimeout(() => {
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            submitBtn.style.background = 'linear-gradient(45deg, #00c851, #007e33)';
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.background = '';
-                submitBtn.disabled = false;
-                contactForm.reset();
-            }, 3000);
-        }, 2000);
     });
 
     const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
@@ -266,49 +267,60 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    const cursorDot = document.createElement('div');
-    cursorDot.className = 'cursor-dot';
-    document.body.appendChild(cursorDot);
-
-    const cursorOutline = document.createElement('div');
-    cursorOutline.className = 'cursor-outline';
-    document.body.appendChild(cursorOutline);
-
-    let mouseX = 0, mouseY = 0;
-    let outlineX = 0, outlineY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-
-        cursorDot.style.left = mouseX + 'px';
-        cursorDot.style.top = mouseY + 'px';
+    document.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('active') && 
+            !navMenu.contains(e.target) && 
+            !hamburger.contains(e.target)) {
+            navMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
     });
 
-    function animateOutline() {
-        outlineX += (mouseX - outlineX) * 0.15;
-        outlineY += (mouseY - outlineY) * 0.15;
+    if (!('ontouchstart' in window)) {
+        const cursorDot = document.createElement('div');
+        cursorDot.className = 'cursor-dot';
+        document.body.appendChild(cursorDot);
 
-        cursorOutline.style.left = outlineX + 'px';
-        cursorOutline.style.top = outlineY + 'px';
+        const cursorOutline = document.createElement('div');
+        cursorOutline.className = 'cursor-outline';
+        document.body.appendChild(cursorOutline);
 
-        requestAnimationFrame(animateOutline);
+        let mouseX = 0, mouseY = 0;
+        let outlineX = 0, outlineY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+
+        function animateOutline() {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+
+            cursorOutline.style.left = outlineX + 'px';
+            cursorOutline.style.top = outlineY + 'px';
+
+            requestAnimationFrame(animateOutline);
+        }
+
+        animateOutline();
+
+        const interactiveElements = document.querySelectorAll('a, button, .gallery-item, .social-card, .feed-item');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            });
+
+            el.addEventListener('mouseleave', () => {
+                cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
     }
-
-    animateOutline();
-
-    const interactiveElements = document.querySelectorAll('a, button, .gallery-item, .social-card, .feed-item');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
-            cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
-        });
-
-        el.addEventListener('mouseleave', () => {
-            cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
-        });
-    });
 
     const style = document.createElement('style');
     style.textContent = `
@@ -344,17 +356,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
-
-    const parallaxElements = document.querySelectorAll('.hero, .about, .gallery, .social-section, .contact');
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        
-        parallaxElements.forEach((element, index) => {
-            const speed = 0.5 + (index * 0.1);
-            const yPos = -(scrolled * speed / 10);
-            element.style.backgroundPosition = `center ${yPos}px`;
-        });
-    });
 
     console.log('%c🎨 Portfolio Loaded Successfully! ', 'background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; font-size: 20px; padding: 10px; border-radius: 5px;');
     console.log('%c📸 Photographer & Influencer Portfolio', 'color: #e1306c; font-size: 16px; font-weight: bold;');
